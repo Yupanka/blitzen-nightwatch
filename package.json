@@ -1,0 +1,19 @@
+{
+  "name": "blitzen-nightwatch",
+  "version": "1.0.0",
+  "description": "end-to-end tests",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "chromedriver": "^2.32.2",
+    "nightwatch": "^0.9.16"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
