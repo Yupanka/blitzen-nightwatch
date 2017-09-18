@@ -1,56 +1,71 @@
-var loginUI = require('../ui-elements/login.js');
-var clientsUI = require('../ui-elements/clients.js');
-var clientDetails = require('../ui-elements/client_details.js');
 var loginData = require('../testdata/logindata.js');
 
 module.exports = {
-  before : function(browser) {
-    browser
-      .url(browser.launchUrl)
-      .setValue(loginUI.username, loginData.username)
-      .setValue(loginUI.password, loginData.password)
-      .click(loginUI.loginButton)
-      .waitForElementVisible(clientsUI.clientsTable, 25000)
-      .windowMaximize('current');
+
+  before : function(client) {
+    const detailsPage = client.page.client_details();
+    const clientsPage = client.page.clients();
+    const loginPage = client.page.login();
+
+    loginPage.navigate()
+      .setValue('@username', loginData.username)
+      .setValue('@password', loginData.password)
+      .click('@loginButton');
+
+    clientsPage
+      .waitForElementVisible('@clientsTable', 25000);
+
+    client.windowMaximize('current');
   },
 
-  after : function(browser) {
-    browser.end();
+  after : function(client) {
+    client.end();
   },
 
-  'Clients Page: UI test' : function (browser) {
-    browser
-      .pause(1000)
-      .verify.visible(clientsUI.clientsTable)
-      .verify.visible(clientsUI.clientRow)
-      .verify.containsText(clientsUI.username, loginData.user)
-      .verify.visible(clientsUI.backButton)
-      .click(clientsUI.username)
-      .waitForElementVisible(clientsUI.logOut, 5000)
-      .verify.visible(clientsUI.logOut);
+  'Clients Page: UI test' : function (client) {
+    const clientsPage = client.page.clients();
+
+    client.pause(1000);
+    clientsPage
+      .verify.visible('@clientsTable')
+      .verify.visible('@clientRow')
+      .verify.containsText('@username', loginData.user)
+      .verify.visible('@backButton')
+      .click('@username')
+      .waitForElementVisible('@logOut', 5000)
+      .verify.visible('@logOut');
   },
 
-  'Clients Page: verify navigation to Client Details and back' : function (browser) {
-    browser
-      .pause(1000)
-      .click(clientsUI.clientRow)
-      .waitForElementVisible(clientDetails.apiKey, 5000)
+  'Clients Page: verify navigation to Client Details and back' : function (client) {
+    const detailsPage = client.page.client_details();
+    const clientsPage = client.page.clients();
+
+    client.pause(1000);
+    clientsPage.click('@clientRow');
+    detailsPage
+      .waitForElementVisible('@apiKey', 5000)
       .verify.title('Blitzen - Client Details')
-      .useXpath()
-      .verify.visible(clientDetails.implementationView)
-      .useCss()
-      .click('link text', "Clients")
-      .waitForElementVisible(clientsUI.clientsTable, 5000)
+      .verify.visible('@implementationView')
+      .click('@clientsButton');
+
+    clientsPage
+      .waitForElementVisible('@clientsTable', 5000)
       .verify.title('Blitzen - Clients');
   },
 
-  'Clients Page: verify logout' : function (browser) {
-    browser
-      .pause(1000)
-      .click(clientsUI.username)
-      .waitForElementVisible(clientsUI.logOut, 5000)
-      .click(clientsUI.logOut)
-      .waitForElementVisible(loginUI.loginForm, 5000)
+  'Clients Page: verify logout' : function (client) {
+    const clientsPage = client.page.clients();
+    const loginPage = client.page.login();
+
+    client.pause(1000);
+
+    clientsPage
+      .click('@username')
+      .waitForElementVisible('@logOut', 5000)
+      .click('@logOut');
+
+    loginPage
+      .waitForElementVisible('@loginForm', 5000)
       .assert.title('Blitzen Login');
   }
 };
