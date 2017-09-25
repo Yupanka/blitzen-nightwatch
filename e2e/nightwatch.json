@@ -3,7 +3,7 @@
   "output_folder" : "reports",
   "custom_commands_path" : "",
   "custom_assertions_path" : "",
-  "page_objects_path" : "./tests/ui-elements",
+  "page_objects_path" : "./tests/pages",
   "globals_path" : "./globals/external_globals.js",
 
   "selenium" : {
@@ -12,7 +12,7 @@
 
   "test_settings" : {
     "default" : {
-      "launch_url" : "http://hcs-blitzen-dev.s3-website-us-east-1.amazonaws.com/",
+      "launch_url" : "https://blitzen-dev.hcs.tools",
       "selenium_port"  : 9515,
       "selenium_host"  : "localhost",
       "default_path_prefix" : "",
@@ -27,7 +27,7 @@
     },
 
     "dev" : {
-      "launch_url" : "http://hcs-blitzen-dev.s3-website-us-east-1.amazonaws.com/",
+      "launch_url" : "https://blitzen-dev.hcs.tools",
       "selenium_port"  : 9515,
       "selenium_host"  : "localhost",
       "default_path_prefix" : "",
@@ -42,7 +42,7 @@
     },
 
     "stg" : {
-      "launch_url" : "http://hcs-blitzen-stg.s3-website-us-east-1.amazonaws.com/",
+      "launch_url" : "https://blitzen-stg.hcs.tools",
       "selenium_port"  : 9515,
       "selenium_host"  : "localhost",
       "default_path_prefix" : "",
@@ -57,7 +57,7 @@
     },
 
     "prod" : {
-      "launch_url" : "http://hcs-blitzen.s3-website-us-east-1.amazonaws.com/",
+      "launch_url" : "https://blitzen.hcs.tools",
       "selenium_port"  : 9515,
       "selenium_host"  : "localhost",
       "default_path_prefix" : "",

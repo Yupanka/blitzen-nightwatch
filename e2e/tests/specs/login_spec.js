@@ -1,14 +1,14 @@
-var loginData = require('../testdata/logindata.js');
+import logindata from '../testdata/logindata.js';
 
-module.exports = {
-  before : function(client) {
+export default {
+
+  before : (client) => {
     const loginPage = client.page.login();
 
     loginPage.navigate()
-      .waitForElementVisible('@username', 25000);
   },
 
-  beforeEach : function(client) {
+  beforeEach : (client) => {
     const loginPage = client.page.login();
     
     loginPage
@@ -16,11 +16,11 @@ module.exports = {
       .clearValue('@password');
   },
 
-  after : function(client) {
+  after : (client) => {
     client.end();
   },
 
-  'Login Page: UI test' : function (client) {
+  'Login Page: UI test' : (client) => {
     const loginPage = client.page.login();
 
     loginPage
@@ -31,38 +31,38 @@ module.exports = {
       .expect.element('@error').to.not.be.present;
   },
 
-  'Login Page: verify error for invalid login': function (client) {
+  'Login Page: verify error for invalid login': (client) => {
     const loginPage = client.page.login();
 
     loginPage
-      .setValue('@username', loginData.invalidLogin)
-      .setValue('@password', loginData.password)
-      .click('@loginButton');
-
-    loginPage.expect.element('@error').to.be.visible.before(5000);
+      .signIn(logindata.invalidLogin, logindata.password)
+      .expect.element('@error').to.be.visible.before(5000);
   },
 
-  'Login Page: verify error for invalid password': function (client) {
+  'Login Page: verify error for invalid password': (client) => {
     const loginPage = client.page.login();
 
-    loginPage
-      .setValue('@username', loginData.username)
-      .setValue('@password', loginData.invalidPassword)
-      .click('@loginButton');
+    //need this pause to catch the error for second test with invalid credentials
+    client.pause(2000);
 
-    loginPage.expect.element('@error').to.be.visible.before(5000);
+    loginPage
+      .signIn(logindata.username, logindata.invalidPassword)
+      .expect.element('@error').to.be.visible.before(5000);
   },
 
-  'Login: verify successful sign in with correct credentials' : function (client) {
+  'Login: verify successful sign, log out and sign in again' : (client) => {
     const loginPage = client.page.login();
     const clientsPage = client.page.clients();
+    const menuPage = client.page.menu();
 
-    loginPage
-      .setValue('@username', loginData.username)
-      .setValue('@password', loginData.password)
-      .click('@loginButton');
+    loginPage.signIn(logindata.username, logindata.password);
+    clientsPage.expect.element('@clientsTable').to.be.visible.before(15000);
 
-    client.expect.element('.table-responsive').to.be.visible.before(15000);
+    menuPage.logOut();
+
+    client.pause(2000);
+
+    loginPage.signIn(logindata.username, logindata.password);
+    clientsPage.expect.element('@clientsTable').to.be.visible.before(15000);
   }
-  
 };

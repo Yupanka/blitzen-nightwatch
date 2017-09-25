@@ -1,10 +1,97 @@
-var clientData = require('../testdata/clientdata.js');
+import clientdata from '../testdata/clientdata.js';
 
-module.exports = {
-  url: function() { 
-    return this.api.launchUrl+clientData.id+'/details'; 
-  },
-  
+export default {
+
+// uncomment this until find the way to skip login
+  // url: () => {
+  //   return this.api.launchUrl+clientData.id+'/details'; 
+  // },
+
+  sections: {
+
+    clientInfo: {
+      selector: 'div[class="container-fluid"] > div > div > div:nth-child(1)',
+      elements: {
+        clientName: {
+          selector: 'h2'
+          },
+        clientID: {
+          selector: 'dl[class="dl-horizontal"]'
+        },
+        apiKey: {
+          selector: '#apiKey'
+        }
+      }
+    },
+
+    implementation: {
+      selector: 'div[class="ibox-content"]',
+      elements: {
+        sectionTitle: {
+          selector: 'h2'
+        },
+        legend: {
+          selector: 'ul[class="list-group clear-list m-t"]', 
+        }
+      }
+    },
+
+    jobs: {
+      selector: '//h5[text()="Jobs"]', 
+      locateStrategy: 'xpath',
+
+      elements: {
+        percentage: {
+          selector: '//div[2]',
+          locateStrategy: 'xpath'
+        }
+      }
+
+    },
+/*
+        candidates: {
+          selector: '',
+
+          elements: {
+          
+          }
+        },
+
+        users: {
+          selector: '',
+
+          elements: {
+          
+          }
+
+        },
+
+        businessLists: {
+          selector: '',
+
+          elements: {
+          
+          }
+        },
+
+        otherLists: {
+          selector: '',
+
+          elements: {
+          
+          }
+        }
+      }
+      */
+    
+
+  }
+
+
+
+
+
+  /*
   elements: {
 
     apiKey: { 

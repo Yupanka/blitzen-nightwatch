@@ -1,7 +1,22 @@
-module.exports = {
+const loginCommands = {  
+  signIn(username, password) {
+    return this
+      .waitForElementVisible('@username', 10000)
+      .setValue('@username', username)
+      .setValue('@password', password)
+      .waitForElementVisible('@loginButton', 1000)
+      .click('@loginButton')
+      .waitForElementNotPresent('@username', 10000)
+  },
+};
+
+export default {  
+
   url: function() { 
     return this.api.launchUrl; 
   },
+
+  commands: [loginCommands],
   
   elements: {
 
@@ -28,18 +43,5 @@ module.exports = {
     loginButton: { 
       selector: '[type="button"]'
     }
-}
-
-
-
-
-/*
-
-    loginForm: '.m-t',
-    username: '[type="email"]',
-    password: '[type="password"]',
-    loginButton: '[type="button"]',
-    appTitle: 'h3',
-    error: '.alert.alert-danger'
-    */
+  }
 };

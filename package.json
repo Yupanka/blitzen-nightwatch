@@ -6,11 +6,23 @@
   "directories": {
     "test": "tests"
   },
+  "babel": {
+    "presets": ["env"],
+    "plugins": [
+      "transform-es2015-arrow-functions",
+      "add-module-exports"
+    ]
+  },
   "dependencies": {
     "chromedriver": "^2.32.2",
     "nightwatch": "^0.9.16"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-es2015-arrow-functions": "^6.22.0",
+    "babel-preset-es2015": "^6.24.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
