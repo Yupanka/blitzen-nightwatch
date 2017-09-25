@@ -1,9 +1,9 @@
 const logindata = {
-    username: 'hq\\tmsuser',
-    password: 'Temporary123',
+    username: '',
+    password: '',
     user: 'tmsuser',
-    invalidLogin: 'hq/tmsuser',
-    invalidPassword: 'temporary123'
+    invalidLogin: '',
+    invalidPassword: ''
 };
 
 export default logindata;
